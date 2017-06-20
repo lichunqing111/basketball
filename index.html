@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的</title>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+</head>
+<body>
+	<div id="page">
+		<header>
+			<p>2017青岛篮球夏训营火热报名中</p>
+			<span>2017-06-19</span> <a href="javascript:;">青岛篮球圈</a>
+		</header>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script> 
+		var url = window.location.href;
+	 	$.ajax({ 
+		 	type : "get", 
+		 	url : "jssdk.php?url="+url,//替换网址，xxx根据自己jssdk文件位置修改 
+		 	dataType : "jsonp", 
+		 	jsonp: "callback", 
+		 	jsonpCallback:"success_jsonpCallback", 
+	 		success : function(data){ 
+	  			wx.config({ 
+	  				debug:true,
+					appId: data.appId, 
+					timestamp: data.timestamp, 
+					nonceStr: data.nonceStr, 
+					signature: data.signature, 
+					jsApiList: [ 
+					  "onMenuShareTimeline", //分享给好友 
+					  "onMenuShareAppMessage", //分享到朋友圈 
+					  "onMenuShareQQ", //分享到QQ 
+					  "onMenuShareWeibo" //分享到微博 
+					] 
+				}); 
+			}, 
+		    error:function(data){ 
+		     	alert("连接失败！"); 
+		    } 
+		}); 
+		wx.ready(function (){ 
+			var shareData = { 
+			title: '标题', 
+			desc: '简介',//这里请特别注意是要去除html 
+			link: '链接', 
+			imgUrl: '题图'
+		}; 
+		wx.onMenuShareAppMessage(shareData); 
+		wx.onMenuShareTimeline(shareData); 
+		wx.onMenuShareQQ(shareData); 
+		wx.onMenuShareWeibo(shareData); 
+	 }); 
+	</script>
+	<script type="text/javascript">
+		document.documentElement.style.fontSize=innerWidth/20+"px";
+		window.onresize=function(){
+			document.documentElement.style.fontSize=innerWidth/20+"px";
+		}
+	</script>
+</body>
+</html>
